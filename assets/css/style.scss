@@ -1,22 +1,163 @@
 ---
 ---
+
 @import "{{ site.theme }}";
 
-/* 팀 포스터: 업로드한 이미지의 해상도·비율이 달라도 같은 크기의 A4 세로 틀 안에 맞춰 보여준다.
-   비율이 다른 이미지는 잘리지 않고 여백을 두고 들어간다(object-fit: contain). */
-.poster { text-align: center; margin: 1.5rem 0 0.5rem; }
+/* 미래지향적 느낌의 전체 폰트 */
+body {
+  font-family: "Pretendard", "Noto Sans KR", "Inter", -apple-system,
+               BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #1f2937;
+  line-height: 1.7;
+  letter-spacing: -0.01em;
+}
+
+/* 제목 */
+h1, h2, h3 {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+h1 {
+  font-size: 2.4rem;
+  background: linear-gradient(90deg, #2563eb, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+h2 {
+  margin-top: 2.2rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid #dbeafe;
+}
+
+/* 팀 슬로건 */
+blockquote {
+  margin: 1.5rem 0;
+  padding: 1rem 1.3rem;
+  border-left: 4px solid #6366f1;
+  background: linear-gradient(
+    90deg,
+    rgba(37, 99, 235, 0.07),
+    rgba(124, 58, 237, 0.05)
+  );
+  border-radius: 0 10px 10px 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+/* 팀 포스터 */
+.poster {
+  text-align: center;
+  margin: 2rem 0 0.7rem;
+}
+
 .poster img {
   display: inline-block;
   width: 100%;
   max-width: 560px;
   height: auto;
-  aspect-ratio: 1 / 1.4142;   /* A4 세로 비율 */
+
+  aspect-ratio: 1 / 1.4142;
   object-fit: contain;
-  background: #fff;
-  border: 1px solid #dfe2e5;
-  border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, .10);
+
+  background: #f8fafc;
+
+  border: 1px solid rgba(99, 102, 241, 0.35);
+  border-radius: 14px;
+
+  box-shadow:
+    0 10px 30px rgba(37, 99, 235, 0.15),
+    0 0 0 1px rgba(124, 58, 237, 0.05);
+
   padding: 8px;
   box-sizing: border-box;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
-.poster-caption { text-align: center; color: #6a737d; font-size: .85rem; margin: .4rem 0 1.2rem; }
+
+.poster img:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 16px 38px rgba(37, 99, 235, 0.20),
+    0 0 24px rgba(124, 58, 237, 0.10);
+}
+
+/* 포스터 설명 */
+.poster-caption {
+  text-align: center;
+  color: #64748b;
+  font-size: 0.82rem;
+  margin: 0.6rem 0 1.4rem;
+}
+
+/* 표 */
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+
+table th {
+  background: linear-gradient(
+    90deg,
+    rgba(37, 99, 235, 0.08),
+    rgba(124, 58, 237, 0.08)
+  );
+  font-weight: 700;
+}
+
+table th,
+table td {
+  padding: 0.8rem 1rem;
+  border-color: #e5e7eb;
+}
+
+/* 링크 */
+a {
+  color: #4f46e5;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover {
+  color: #7c3aed;
+  text-decoration: underline;
+}
+
+/* 구분선 */
+hr {
+  border: 0;
+  height: 1px;
+  margin: 2.5rem 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #93c5fd,
+    #c4b5fd,
+    transparent
+  );
+}
+
+/* 모바일 */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  .poster img {
+    max-width: 100%;
+    border-radius: 10px;
+  }
+
+  table th,
+  table td {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
+}
