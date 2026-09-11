@@ -1,431 +1,573 @@
 ---
 ---
 
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css");
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&display=swap");
+
 @import "{{ site.theme }}";
 
-/* =========================
-   전체 기본 스타일
-========================= */
 
-body {
-  font-family: "Pretendard", "Noto Sans KR", "Inter",
-               -apple-system, BlinkMacSystemFont,
-               "Segoe UI", sans-serif;
+/* =========================================================
+   토큰
+   ---------------------------------------------------------
+   그래파이트 바탕 + 본화이트 + 앰버 한 가지.
+   색은 하나만 쓰고, 나머지는 대비와 여백으로 만든다.
+========================================================= */
 
-  color: #1f2937;
-  line-height: 1.7;
-  letter-spacing: -0.01em;
+:root {
+  --ink:      #0c0d10;   /* 바탕 */
+  --ink-2:    #14161b;   /* 코드·셀 배경 */
+  --bone:     #f2f1ed;   /* 본문 */
+  --dim:      #9b9da6;   /* 보조 텍스트 */
+  --mute:     #63656e;   /* 캡션 */
+  --amber:    #e6b168;   /* 유일한 강조색 */
+
+  --line:     rgba(242, 241, 237, 0.10);
+  --line-hi:  rgba(242, 241, 237, 0.22);
+
+  --display: "Syne", "Pretendard", sans-serif;
+  --sans:    "Pretendard", -apple-system, BlinkMacSystemFont,
+             "Segoe UI", "Noto Sans KR", sans-serif;
+  --mono:    ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+
+  --measure: 68ch;
 }
 
 
-/* =========================
+/* =========================================================
+   바탕
+========================================================= */
+
+html {
+  background: var(--ink);
+}
+
+body {
+  background: var(--ink) !important;
+  color: var(--bone);
+
+  font-family: var(--sans);
+  font-size: 1.02rem;
+  line-height: 1.78;
+  letter-spacing: -0.008em;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* 아주 옅은 광원 두 개. 화면에 깊이만 준다. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+
+  background:
+    radial-gradient(60rem 40rem at 15% -10%,
+      rgba(230, 177, 104, 0.07), transparent 60%),
+    radial-gradient(50rem 50rem at 100% 0%,
+      rgba(160, 180, 220, 0.06), transparent 60%);
+}
+
+::selection {
+  background: var(--amber);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+
+/* =========================================================
+   테마 껍데기 덮어쓰기
+   (cayman / minima / architect 등 공통 래퍼)
+========================================================= */
+
+.page-header,
+.site-header,
+.site-footer,
+#header,
+header {
+  background: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: var(--bone) !important;
+}
+
+.page-header {
+  padding: 3.5rem 1rem 0 !important;
+}
+
+.project-name,
+.project-tagline {
+  color: var(--bone) !important;
+  opacity: 1;
+}
+
+.main-content,
+.wrapper,
+.inner,
+section {
+  color: var(--bone) !important;
+  max-width: 46rem;
+}
+
+.main-content {
+  padding: 2rem 1.25rem 6rem !important;
+  font-size: inherit !important;
+}
+
+.main-content h1,
+.main-content h2,
+.main-content h3,
+.main-content h4 {
+  color: var(--bone) !important;
+}
+
+.btn {
+  color: var(--bone) !important;
+  border-color: var(--line-hi) !important;
+  background: transparent !important;
+  border-radius: 2px;
+}
+
+.btn:hover {
+  border-color: var(--amber) !important;
+  color: var(--amber) !important;
+}
+
+
+/* =========================================================
    제목
-========================= */
+========================================================= */
 
 h1 {
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-family: var(--display);
+  font-size: clamp(2.4rem, 7vw, 3.8rem);
   font-weight: 800;
-  line-height: 1.2;
-  letter-spacing: -0.035em;
+  line-height: 1.02;
+  letter-spacing: -0.045em;
 
-  color: #0f172a;
-
-  text-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.8),
-    0 2px 8px rgba(37, 99, 235, 0.12);
-
-  margin-top: 1rem;
-  margin-bottom: 1.5rem;
+  color: var(--bone);
+  margin: 0 0 2.8rem;
 
   word-break: keep-all;
-  overflow-wrap: anywhere;
 }
 
 h2 {
-  margin-top: 2.2rem;
-  margin-bottom: 1rem;
-  padding-bottom: 0.45rem;
+  position: relative;
 
-  font-size: 1.6rem;
-  font-weight: 750;
-  line-height: 1.35;
-  letter-spacing: -0.025em;
+  margin: 4.2rem 0 1.2rem;
+  padding-left: 1rem;
 
-  color: #172033;
-  border-bottom: 1px solid #dbeafe;
+  font-size: 1.32rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.022em;
+
+  color: var(--bone);
+  word-break: keep-all;
+}
+
+/* 섹션 시작을 알리는 얇은 수직선 — 장식이 아니라 구분자 */
+h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  bottom: 0.45em;
+  width: 2px;
+  background: var(--amber);
 }
 
 h3 {
-  margin-top: 1.8rem;
-  font-weight: 700;
-  color: #1e293b;
+  margin: 2.4rem 0 0.6rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--dim);
+  letter-spacing: -0.015em;
 }
 
 
-/* =========================
+/* =========================================================
    본문
-========================= */
+========================================================= */
 
 p {
-  margin: 0.7rem 0 1rem;
+  max-width: var(--measure);
+  margin: 0 0 1.1rem;
+  color: rgba(242, 241, 237, 0.82);
+  word-break: keep-all;
 }
 
 strong {
   font-weight: 700;
-  color: #111827;
+  color: var(--bone);
+}
+
+em {
+  color: var(--amber);
+  font-style: normal;
 }
 
 
-/* =========================
-   Feel the AGI 슬로건
-========================= */
+/* =========================================================
+   슬로건 — 이 페이지에서 유일하게 크게 지르는 자리
+========================================================= */
 
 blockquote {
   position: relative;
 
-  margin: 2rem 0 2.4rem;
-  padding: 1.5rem 1.8rem;
+  margin: 3.2rem 0 4.2rem;
+  padding: 3.2rem 0;
 
-  border: 1px solid rgba(99, 102, 241, 0.22);
-  border-left: 5px solid #6366f1;
-  border-radius: 14px;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: none;
 
-  background:
-    linear-gradient(
-      135deg,
-      rgba(37, 99, 235, 0.10),
-      rgba(124, 58, 237, 0.08)
-    );
-
-  box-shadow:
-    0 8px 24px rgba(37, 99, 235, 0.10);
-
-  overflow: hidden;
+  text-align: center;
 }
 
 blockquote::before {
   content: "";
   position: absolute;
-  inset: 0;
+  left: 50%;
+  top: 50%;
+  width: 26rem;
+  height: 12rem;
+  transform: translate(-50%, -50%);
 
-  background:
-    radial-gradient(
-      circle at 20% 20%,
-      rgba(96, 165, 250, 0.16),
-      transparent 35%
-    ),
-    radial-gradient(
-      circle at 80% 80%,
-      rgba(167, 139, 250, 0.14),
-      transparent 35%
-    );
+  background: radial-gradient(
+    closest-side,
+    rgba(230, 177, 104, 0.16),
+    transparent
+  );
 
+  filter: blur(8px);
   pointer-events: none;
 }
 
 blockquote p {
   position: relative;
-  z-index: 1;
 
+  max-width: none;
   margin: 0;
 
-  font-size: clamp(2rem, 6vw, 3.4rem);
-  font-weight: 900;
-  line-height: 1.05;
+  font-family: var(--display);
+  font-size: clamp(2.6rem, 11vw, 5.2rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.05em;
 
-  letter-spacing: -0.04em;
-
+  /* 천천히 지나가는 빛 한 줄. 페이지 전체에서 움직이는 건 이것뿐. */
   background: linear-gradient(
-    90deg,
-    #2563eb,
-    #4f46e5,
-    #7c3aed
+    100deg,
+    var(--bone) 40%,
+    var(--amber) 50%,
+    var(--bone) 60%
   );
+  background-size: 300% 100%;
 
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  color: transparent;
 
-  text-align: center;
+  animation: sweep 9s linear infinite;
+}
 
-  text-shadow:
-    0 8px 30px rgba(79, 70, 229, 0.14);
+@keyframes sweep {
+  from { background-position: 220% 0; }
+  to   { background-position: -120% 0; }
 }
 
 
-/* =========================
-   팀 포스터
-========================= */
+/* =========================================================
+   포스터
+========================================================= */
 
 .poster {
+  margin: 2.4rem 0 0.8rem;
   text-align: center;
-  margin: 2rem 0 0.7rem;
 }
 
 .poster img {
   display: inline-block;
 
   width: 100%;
-  max-width: 560px;
+  max-width: 480px;
   height: auto;
 
   aspect-ratio: 1 / 1.4142;
   object-fit: contain;
 
-  background: #f8fafc;
+  background: var(--ink-2);
+  border: 1px solid var(--line);
+  border-radius: 3px;
 
-  border: 1px solid rgba(99, 102, 241, 0.35);
-  border-radius: 14px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
 
-  box-shadow:
-    0 10px 30px rgba(37, 99, 235, 0.15),
-    0 0 0 1px rgba(124, 58, 237, 0.05);
-
-  padding: 8px;
-  box-sizing: border-box;
-
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
+  transition: border-color 0.25s ease;
 }
 
 .poster img:hover {
-  transform: translateY(-4px);
-
-  box-shadow:
-    0 16px 38px rgba(37, 99, 235, 0.20),
-    0 0 24px rgba(124, 58, 237, 0.10);
+  border-color: var(--line-hi);
 }
 
 .poster-caption {
+  margin: 0.8rem 0 2.4rem;
+
+  color: var(--mute);
+  font-size: 0.8rem;
+  line-height: 1.6;
   text-align: center;
-
-  color: #64748b;
-  font-size: 0.82rem;
-  line-height: 1.5;
-
-  margin: 0.6rem 0 1.4rem;
 }
 
 
-/* =========================
-   표
-========================= */
+/* =========================================================
+   표 — 선을 최대한 지우고 가로줄만 남긴다
+========================================================= */
 
 table {
   width: 100%;
+  margin: 1.4rem 0 2rem;
 
-  border-collapse: separate;
-  border-spacing: 0;
-
-  overflow: hidden;
-
-  border: 1px solid #e2e8f0;
-  border-radius: 10px;
-
-  margin: 1.2rem 0 1.5rem;
+  border: 0;
+  border-collapse: collapse;
+  font-size: 0.93rem;
 }
 
 table th {
-  background: linear-gradient(
-    90deg,
-    rgba(37, 99, 235, 0.08),
-    rgba(124, 58, 237, 0.08)
-  );
+  padding: 0 0.9rem 0.7rem 0;
 
-  color: #172033;
-  font-weight: 700;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--line-hi);
+
+  color: var(--dim);
+  font-weight: 500;
+  font-size: 0.82rem;
+  text-align: left;
+  white-space: nowrap;
 }
 
-table th,
 table td {
-  padding: 0.8rem 1rem;
-  border-color: #e5e7eb;
-  vertical-align: middle;
+  padding: 0.85rem 0.9rem 0.85rem 0;
+
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+
+  color: rgba(242, 241, 237, 0.82);
+  vertical-align: top;
+  word-break: keep-all;
+}
+
+table td:first-child {
+  color: var(--bone);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+table tr:last-child td {
+  border-bottom: 0;
 }
 
 
-/* =========================
+/* =========================================================
    목록
-========================= */
+========================================================= */
 
-ul,
-ol {
-  padding-left: 1.5rem;
+ul, ol {
+  max-width: var(--measure);
+  padding-left: 1.1rem;
+  margin: 0 0 1.4rem;
 }
 
 li {
-  margin: 0.35rem 0;
+  margin: 0.45rem 0;
+  color: rgba(242, 241, 237, 0.82);
+  word-break: keep-all;
+}
+
+li::marker {
+  color: var(--amber);
 }
 
 
-/* =========================
+/* =========================================================
    링크
-========================= */
+========================================================= */
 
 a {
-  color: #4f46e5;
-  text-decoration: none;
+  color: var(--bone);
   font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: var(--amber);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
 
-  transition: color 0.2s ease;
+  transition: color 0.18s ease;
 }
 
 a:hover {
-  color: #7c3aed;
-  text-decoration: underline;
+  color: var(--amber);
 }
 
 
-/* =========================
-   구분선
-========================= */
+/* =========================================================
+   구분선 · 코드
+========================================================= */
 
 hr {
-  border: 0;
   height: 1px;
-
-  margin: 2.5rem 0;
-
-  background: linear-gradient(
-    90deg,
-    transparent,
-    #93c5fd,
-    #c4b5fd,
-    transparent
-  );
+  border: 0;
+  margin: 3.5rem 0;
+  background: var(--line);
 }
 
-
-/* =========================
-   코드
-========================= */
-
 code {
-  padding: 0.15rem 0.35rem;
+  padding: 0.12rem 0.38rem;
 
-  border-radius: 5px;
+  background: var(--ink-2);
+  border: 1px solid var(--line);
+  border-radius: 3px;
 
-  background: #f1f5f9;
-  color: #4338ca;
-
-  font-size: 0.9em;
+  color: var(--amber);
+  font-family: var(--mono);
+  font-size: 0.86em;
 }
 
 pre {
+  padding: 1.1rem 1.2rem;
   overflow-x: auto;
-  border-radius: 10px;
+
+  background: var(--ink-2) !important;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--bone);
 }
 
 
-/* =========================
-   모바일 반응형
-========================= */
+/* =========================================================
+   모바일
+========================================================= */
 
 @media (max-width: 768px) {
 
   body {
-    font-size: 0.98rem;
-    line-height: 1.65;
+    font-size: 0.97rem;
+    line-height: 1.72;
+  }
+
+  .page-header {
+    padding: 2.4rem 1rem 0 !important;
+  }
+
+  .main-content {
+    padding: 1.4rem 1.15rem 4rem !important;
   }
 
   h1 {
-    font-size: 2rem;
-    line-height: 1.25;
-    letter-spacing: -0.02em;
-
-    margin-top: 0.8rem;
-    margin-bottom: 1.2rem;
+    margin-bottom: 2rem;
   }
 
   h2 {
-    font-size: 1.4rem;
-    margin-top: 1.8rem;
-  }
-
-  h3 {
-    font-size: 1.15rem;
+    margin-top: 3.2rem;
+    font-size: 1.2rem;
+    padding-left: 0.8rem;
   }
 
   blockquote {
-    margin: 1.5rem 0 2rem;
-    padding: 1.2rem 1rem;
-
-    border-left-width: 4px;
-    border-radius: 12px;
+    margin: 2.4rem 0 3.2rem;
+    padding: 2.4rem 0;
   }
 
-  blockquote p {
-    font-size: clamp(1.8rem, 10vw, 2.6rem);
-    line-height: 1.1;
-    letter-spacing: -0.03em;
+  blockquote::before {
+    width: 18rem;
+    height: 9rem;
   }
 
-  .poster {
-    margin-top: 1.4rem;
-  }
-
-  .poster img {
-    max-width: 100%;
-    border-radius: 10px;
-    padding: 5px;
-  }
-
-  .poster-caption {
-    font-size: 0.78rem;
-    padding: 0 0.4rem;
-  }
-
-  table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-
-    -webkit-overflow-scrolling: touch;
-  }
-
-  table th,
+  /* 모바일에서는 표를 가로 스크롤 대신 카드처럼 쌓는다 */
+  table,
+  table tbody,
+  table tr,
   table td {
-    padding: 0.65rem 0.75rem;
-    font-size: 0.9rem;
+    display: block;
+    width: 100%;
   }
 
-  ul,
-  ol {
-    padding-left: 1.2rem;
+  table thead {
+    display: none;
+  }
+
+  table tr {
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  table tr:last-child {
+    border-bottom: 0;
+  }
+
+  table td {
+    padding: 0.15rem 0;
+    border: 0;
+  }
+
+  table td:first-child {
+    margin-bottom: 0.35rem;
+    font-size: 1.05rem;
+  }
+
+  table td:not(:first-child)::before {
+    content: attr(data-label);
+    color: var(--mute);
   }
 }
-
-
-/* =========================
-   작은 모바일
-========================= */
 
 @media (max-width: 480px) {
 
   body {
-    font-size: 0.95rem;
+    font-size: 0.94rem;
   }
 
   h1 {
-    font-size: 1.85rem;
-  }
-
-  h2 {
-    font-size: 1.3rem;
-  }
-
-  blockquote {
-    padding: 1rem 0.8rem;
-    border-left-width: 3px;
-    border-radius: 10px;
+    font-size: 2.1rem;
   }
 
   blockquote p {
-    font-size: 2rem;
+    letter-spacing: -0.04em;
+  }
+}
+
+
+/* =========================================================
+   모션 최소화 설정 존중
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  blockquote p {
+    animation: none;
+    background: none;
+    -webkit-text-fill-color: var(--bone);
+    color: var(--bone);
   }
 
-  .poster img:hover {
-    transform: none;
+  * {
+    transition: none !important;
   }
 }
