@@ -7,7 +7,7 @@
 ## 팀 포스터
 
 <div class="poster">
-  <img src="poster.png" alt="팀 포스터" width="600"/>
+  <img src="poster1.png" alt="팀 포스터" width="600"/>
 </div>
 
 ## 1. 팀원 소개
