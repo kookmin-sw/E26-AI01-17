@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-30T19:40:00+09:00",
+  "title": "Design System: ORBIT 2050",
+  "extensions": {
+    "colorMeta": {
+      "drawing-paper": { "role": "neutral", "displayName": "Drawing Paper", "canonical": "#F2F3EF", "tonalRamp": ["#22231F", "#3B3D38", "#575953", "#74766F", "#93958D", "#B3B5AE", "#D3D5CE", "#F2F3EF"] },
+      "line-ink": { "role": "neutral", "displayName": "Line Ink", "canonical": "#151617", "tonalRamp": ["#151617", "#2D2F31", "#47494C", "#626568", "#7F8285", "#9DA0A3", "#BCBFC1", "#DCDEDF"] },
+      "annotation-gray": { "role": "neutral", "displayName": "Annotation Gray", "canonical": "#50555B", "tonalRamp": ["#1D1F22", "#33373B", "#50555B", "#6B7077", "#878C92", "#A4A8AD", "#C2C5C9", "#E0E2E4"] },
+      "hairline": { "role": "neutral", "displayName": "Hairline", "canonical": "#A9ADA8", "tonalRamp": ["#262826", "#40433F", "#5C5F5B", "#787C77", "#959994", "#A9ADA8", "#CDD0CC", "#EBEDEA"] },
+      "overload-red": { "role": "secondary", "displayName": "Overload Red", "canonical": "#C8321F", "tonalRamp": ["#3D0D07", "#64160C", "#8E2013", "#C8321F", "#DE5A47", "#EA8678", "#F3B3AA", "#FADDD8"] },
+      "orbit-blue": { "role": "primary", "displayName": "Orbit Blue", "canonical": "#1565A8", "tonalRamp": ["#071F35", "#0C3459", "#114B7F", "#1565A8", "#3E86C4", "#6FA6D6", "#A3C6E6", "#D5E5F4"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Project name ORBIT 2050 only." },
+      "headline": { "displayName": "Headline", "purpose": "The one-line concept under the title." },
+      "title": { "displayName": "Section Title", "purpose": "Section headings ① to ⑥." },
+      "body": { "displayName": "Body", "purpose": "Prose, captions and table cells." },
+      "label": { "displayName": "Technical Label", "purpose": "Figures, units, codes, table headers and tags." }
+    },
+    "shadows": [],
+    "motion": [],
+    "breakpoints": []
+  },
+  "components": [
+    {
+      "name": "Section Rule",
+      "kind": "custom",
+      "refersTo": "section-rule",
+      "description": "Full-width ink rule with circled number, title and gray subtitle on one baseline.",
+      "html": "<div class=\"ds-sec\"><span class=\"ds-sec-no\">②</span><span class=\"ds-sec-t\">문제와 사용자</span><span class=\"ds-sec-s\">AI 확장의 병목은 전력이다</span></div>",
+      "css": ".ds-sec { border-top: 3px solid #151617; padding-top: 12px; display: flex; align-items: baseline; gap: 16px; font-family: 'Gothic A1', sans-serif; color: #151617; background: #F2F3EF; } .ds-sec-no, .ds-sec-t { font-size: 28px; font-weight: 900; } .ds-sec-s { font-size: 20px; font-weight: 700; color: #50555B; }"
+    },
+    {
+      "name": "Revision Table",
+      "kind": "custom",
+      "refersTo": "table-cell",
+      "description": "Ruled table; superseded rows struck through, current row in Orbit Blue.",
+      "html": "<table class=\"ds-rev\"><tr><th>REV</th><th>주제</th><th>판정</th></tr><tr class=\"ds-old\"><td>A</td><td>웨어러블 건강관리</td><td>2030 가능</td></tr><tr class=\"ds-cur\"><td>F</td><td>ORBIT 2050</td><td>현행</td></tr></table>",
+      "css": ".ds-rev { border-collapse: collapse; font-family: 'Gothic A1', sans-serif; font-size: 16px; color: #151617; background: #F2F3EF; } .ds-rev th, .ds-rev td { border: 1px solid #151617; padding: 4px 9px; text-align: left; } .ds-rev th { font-family: 'Barlow Condensed', sans-serif; font-weight: 600; letter-spacing: .04em; } .ds-old td:nth-child(2) { text-decoration: line-through; color: #50555B; } .ds-cur td { color: #1565A8; font-weight: 900; }"
+    },
+    {
+      "name": "HOLD Tag",
+      "kind": "chip",
+      "refersTo": "hold-tag",
+      "description": "Red outlined tag beside an unresolved verification question.",
+      "html": "<span class=\"ds-hold\">HOLD 1</span>",
+      "css": ".ds-hold { display: inline-block; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 16px; letter-spacing: .06em; color: #C8321F; border: 1.5px solid #C8321F; padding: 2px 10px; background: #F2F3EF; }"
+    },
+    {
+      "name": "Diagram Bus",
+      "kind": "custom",
+      "refersTo": "section-rule",
+      "description": "Single-line diagram bus with loads; red when overloaded, blue for ORBIT.",
+      "html": "<svg class=\"ds-bus\" viewBox=\"0 0 200 60\" width=\"200\" height=\"60\"><line x1=\"10\" y1=\"20\" x2=\"190\" y2=\"20\" stroke=\"#C8321F\" stroke-width=\"4\"/><line x1=\"50\" y1=\"20\" x2=\"50\" y2=\"38\" stroke=\"#C8321F\" stroke-width=\"1.5\"/><path d=\"M44 38h12l-6 10z\" fill=\"#C8321F\"/><line x1=\"110\" y1=\"20\" x2=\"110\" y2=\"38\" stroke=\"#151617\" stroke-width=\"1.5\"/><path d=\"M104 38h12l-6 10z\" fill=\"#151617\"/></svg>",
+      "css": ".ds-bus { background: #F2F3EF; display: block; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Single-Line Diagram",
+    "overview": "The poster is an electrical engineering drawing of AI's power problem. Every section reads as part of one drawing sheet: a zone-marked border frame, heavy section rules, a revision table, a component list, HOLD marks for unresolved items and a title block for the team. Information is drawn, not boxed. The ground grid and the orbit layer share one line language, so the argument (the 수도권 bus is overloaded, ORBIT adds a bus in orbit) is visible before any paragraph is read.\n\nDensity is that of a working drawing: many labelled elements, small but legible annotation, large quiet paper. Color is signal, never decoration. The world deliberately refuses the navy space poster with satellite art and rounded cards that the first drafts used.",
+    "keyCharacteristics": [
+      "Drawing-sheet frame with zone markers (1–8, A–F) and a 40 mm content margin",
+      "Square corners everywhere; containers are ruled tables and frame lines, never cards",
+      "Two signal colors on paper and ink: red for stress, blue for ORBIT",
+      "Condensed technical lettering for numbers and labels, a plain Korean gothic for prose",
+      "Vector only: no gradients, patterns or raster images"
+    ],
+    "rules": [
+      { "name": "The Signal Rule", "body": "Red means stress, blue means ORBIT. Neither color is used for emphasis that does not carry that meaning.", "section": "colors" },
+      { "name": "The Solid–Dashed Rule", "body": "Solid lines are present-day fact; dashed lines are projection, optical links or removed items.", "section": "colors" },
+      { "name": "The Lettering Rule", "body": "Numbers, codes and units are set in Barlow Condensed; Korean sentences are set in Gothic A1.", "section": "typography" }
+    ],
+    "dos": [
+      "Do draw information as diagram, table or rule before reaching for a container.",
+      "Do keep every figure traceable to a numbered reference.",
+      "Do mark fictional examples as examples (e.g. \"수용가 예시\").",
+      "Do keep all text at least 40 mm from the sheet edge."
+    ],
+    "donts": [
+      "Don't use rounded cards, soft shadows or gradients (Chrome rasterizes gradients and patterns at low resolution).",
+      "Don't use red or blue as decoration.",
+      "Don't set the poster in Pretendard or another default UI sans.",
+      "Don't add version labels or disclaimer footers to the sheet."
+    ]
+  }
+}
