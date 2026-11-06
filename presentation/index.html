@@ -625,7 +625,7 @@ function render() {
   $('tb-no').textContent = `SHEET ${String(cur + 1).padStart(2, '0')}/${slides.length}`;
   $('src').textContent = el.dataset.src ? '출처 · ' + el.dataset.src : '';
   $('tgt').textContent = '목표 ' + el.dataset.t;
-  $('txt').innerHTML = el.querySelector('.nt').innerHTML;
+  $('txt').innerHTML = el.querySelector('.nt').innerHTML + (cur < slides.length - 1 ? ` <b>[다음 페이지 → ${cur + 2}장]</b>` : '');
   history.replaceState(null, '', '#' + (cur + 1) + (step ? '.' + step : ''));
 }
 function go(n, s = 0) {
