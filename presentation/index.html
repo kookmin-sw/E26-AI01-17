@@ -1,0 +1,652 @@
+<!doctype html>
+<!--
+  ORBIT 2050 — 5분 발표 슬라이드. 포스터(poster/orbit2050.html)와 같은 전력 계통도 세계를 쓴다.
+  조작: → ↓ Space PgDn 다음 / ← ↑ PgUp 이전 / Home End / F 전체화면 / N 대본·타이머
+  주소: #7 은 7번 장, #7.1 은 7번 장의 첫 클릭 이후 상태. 무대는 1600×900, SVG 단위도 같은 px.
+-->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ORBIT 2050 발표</title>
+<meta name="description" content="AI 데이터센터를 우주로 보낸다. 2026 국민대학교 유레카 프로젝트 E26-AI01-17 팀 발표 슬라이드.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Gothic+A1:wght@400;500;700;800;900&display=swap">
+<style>
+:root {
+  --paper: #F2F3EF; --ink: #151617; --muted: #50555B; --hair: #A9ADA8;
+  --red: #C8321F; --blue: #1565A8;
+  --kr: 'Gothic A1', sans-serif; --tech: 'Barlow Condensed', 'Gothic A1', sans-serif;
+  --ease: cubic-bezier(.16, 1, .3, 1);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; overflow: hidden; background: var(--paper); }
+body { color: var(--ink); font-family: var(--kr); word-break: keep-all; }
+::selection { background: var(--blue); color: var(--paper); }
+:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+
+#stage { position: absolute; left: 0; top: 0; width: 1600px; height: 900px; transform-origin: 0 0; background: var(--paper); cursor: default; user-select: none; }
+.frame { position: absolute; inset: 0; pointer-events: none; }
+svg text { font-family: var(--tech); }
+
+.slide { position: absolute; left: 64px; top: 52px; width: 1472px; height: 756px; }
+.slide[hidden] { display: none; }
+h1, h2, p, ul, ol { margin: 0; padding: 0; }
+h2 { font-size: 62px; font-weight: 900; line-height: 1.22; letter-spacing: -.02em; text-wrap: balance; }
+.tech { font-family: var(--tech); }
+.r { color: var(--red); } .b { color: var(--blue); }
+.src { position: absolute; left: 64px; bottom: 40px; width: 820px; font-size: 20px; line-height: 1.3; font-weight: 500; color: var(--muted); }
+
+[data-at] { opacity: 0; transition: opacity .25s ease-out; }
+[data-at].on { opacity: 1; }
+.swap-a, .swap-b { transition: opacity .35s ease-out; }
+.swap-b { opacity: 0; }
+[data-step="1"] .swap-a { opacity: 0; }
+[data-step="1"] .swap-b { opacity: 1; }
+
+/* 도면 표제란 */
+#tb { position: absolute; right: 28px; bottom: 28px; display: flex; height: 52px; background: var(--paper); border: 3px solid var(--ink); border-right: 0; border-bottom: 0; font-size: 24px; }
+#tb > * { display: flex; align-items: center; padding: 0 18px; border-right: 2px solid var(--ink); color: var(--ink); text-decoration: none; white-space: nowrap; }
+#tb > *:last-child { border-right: 0; }
+#tb .nm { font-family: var(--tech); font-weight: 700; letter-spacing: .02em; }
+#tb .sec { font-weight: 700; font-size: 22px; }
+#tb .no { font-family: var(--tech); font-weight: 600; letter-spacing: .03em; font-variant-numeric: tabular-nums; }
+#tb button { background: none; border: 0; border-right: 2px solid var(--ink); border-radius: 0; font: inherit; cursor: pointer; padding: 0 14px; }
+#tb button:hover, #tb a:hover { background: var(--ink); color: var(--paper); }
+
+/* ① 표지 */
+.cover h1 { position: absolute; left: -6px; top: 92px; font-family: var(--tech); font-weight: 700; font-size: 300px; line-height: .86; letter-spacing: -.005em; }
+.cover .sub { position: absolute; left: 0; top: 364px; font-size: 76px; font-weight: 900; letter-spacing: -.02em; }
+.cover .who { position: absolute; left: 0; top: 660px; font-size: 34px; font-weight: 700; }
+.cover .who .tech { font-weight: 700; font-size: 38px; letter-spacing: .01em; }
+
+/* ① 개정 이력 */
+.hook { display: grid; grid-template-columns: 650px 1fr; gap: 56px; height: 100%; }
+.hook h2 { font-size: 66px; }
+.hook .then { margin-top: 56px; font-size: 44px; font-weight: 900; line-height: 1.3; letter-spacing: -.01em; }
+.rule-t { width: 100%; border-collapse: collapse; font-size: 32px; }
+.rule-t th, .rule-t td { border: 2px solid var(--ink); padding: 14px 18px; text-align: left; }
+.rule-t th { font-family: var(--tech); font-weight: 600; font-size: 26px; letter-spacing: .04em; }
+.rule-t .k { font-family: var(--tech); font-weight: 700; text-align: center; width: 64px; }
+.rule-t .v { font-family: var(--tech); font-weight: 700; white-space: nowrap; }
+.rev s { color: var(--muted); text-decoration-thickness: 3px; }
+.rev tr.cur td { color: var(--blue); font-weight: 900; border-width: 4px; }
+.rev-n { margin-top: 18px; font-size: 25px; line-height: 1.4; color: var(--muted); font-weight: 500; }
+
+/* ② 사람 */
+.bus-r { height: 12px; margin: 34px 0 0; background: var(--red); }
+.loads { display: grid; grid-template-columns: repeat(3, 1fr); gap: 44px; }
+.load svg { display: block; margin-left: 30px; }
+.load .who { font-size: 28px; font-weight: 700; color: var(--muted); margin-top: 14px; }
+.load .who .tech { font-size: 30px; color: var(--ink); }
+.load q { display: block; quotes: none; font-size: 42px; font-weight: 900; line-height: 1.3; letter-spacing: -.01em; margin-top: 14px; min-height: 165px; }
+.load p { font-size: 30px; line-height: 1.42; margin-top: 10px; }
+.so { position: absolute; left: 0; right: 0; bottom: 0; border-top: 4px solid var(--ink); padding-top: 18px; font-size: 40px; font-weight: 900; letter-spacing: -.01em; line-height: 1.3; }
+
+/* ③ 미래 장면: 포스터의 Before/After를 한 도면 안의 상태 변화로 */
+.stack { position: relative; }
+.stack > * { position: absolute; left: 0; top: 0; width: 100%; }
+.sc-bus { stroke: var(--red); transition: stroke .6s ease-out; }
+.sc-learn { color: var(--red); transition: transform .95s var(--ease), color .6s ease-out; }
+.sc-orbit { stroke-dasharray: 920; stroke-dashoffset: 920; transition: stroke-dashoffset .95s var(--ease); }
+.sc-gimpo { stroke: var(--red); transition: stroke .5s ease-out; }
+[data-step="1"] .sc-bus { stroke: var(--ink); }
+[data-step="1"] .sc-learn { color: var(--blue); transform: translateY(-240px); }
+[data-step="1"] .sc-orbit { stroke-dashoffset: 0; }
+[data-step="1"] .sc-gimpo { stroke: var(--hair); }
+.cap { font-size: 33px; font-weight: 700; line-height: 1.4; }
+
+/* ④ 작업 배분 */
+.sw-arm { stroke: var(--blue); transform-origin: 480px 205px; transition: transform .7s var(--ease), stroke .4s ease-out; }
+[data-step="1"] .sw-arm { transform: rotate(71.6deg); stroke: var(--ink); }
+.ux { list-style: none; margin-top: 18px; border-top: 3px solid var(--ink); }
+.ux li { display: grid; grid-template-columns: 170px 1fr; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--hair); font-size: 29px; line-height: 1.35; }
+.ux b { font-weight: 900; }
+
+/* ④ 구성품 + 일정 */
+.build { display: grid; grid-template-columns: 800px 1fr; gap: 64px; margin-top: 30px; }
+.bom { font-size: 27px; }
+.bom th, .bom td { padding: 12px 14px; line-height: 1.32; }
+.bom th { font-size: 24px; }
+.bom td b { font-weight: 800; white-space: nowrap; }
+.bom .core td { color: var(--blue); font-weight: 800; border-width: 4px; }
+.tl { position: relative; }
+.tl svg { position: absolute; left: 0; top: 0; }
+.tl ol { list-style: none; margin-left: 56px; }
+.tl li { height: 141px; }
+.tl .d { font-family: var(--tech); font-weight: 700; font-size: 46px; line-height: 1; color: var(--blue); }
+.tl .t { font-size: 28px; font-weight: 700; line-height: 1.32; margin-top: 8px; }
+
+/* ⑤ HOLD */
+.holds { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-top: 26px; }
+.holds h3 { margin: 0; font-size: 28px; font-weight: 800; color: var(--muted); border-bottom: 3px solid var(--ink); padding-bottom: 10px; }
+.hold { display: grid; grid-template-columns: 124px 1fr; gap: 0 18px; padding: 21px 0; border-bottom: 1px solid var(--hair); }
+.tag { align-self: start; font-family: var(--tech); font-weight: 700; font-size: 29px; letter-spacing: .05em; line-height: 1; color: var(--red); border: 3px solid var(--red); padding: 8px 0; text-align: center; }
+.hold b { font-size: 35px; font-weight: 900; letter-spacing: -.01em; line-height: 1.25; }
+.hold p { grid-column: 2; font-size: 27px; line-height: 1.4; margin-top: 8px; }
+.stance { margin-top: 34px; font-size: 40px; font-weight: 900; line-height: 1.3; letter-spacing: -.01em; }
+
+/* ⑥ 팀 */
+.end h2 { font-family: var(--tech); font-weight: 700; font-size: 210px; line-height: .9; letter-spacing: 0; }
+.end .sub { font-size: 48px; font-weight: 900; margin-top: 20px; letter-spacing: -.02em; }
+.team { margin-top: 56px; font-size: 34px; }
+.team td { padding: 16px 22px; }
+.team td:first-child { font-weight: 800; white-space: nowrap; width: 190px; }
+.team td:nth-child(2) { font-weight: 900; white-space: nowrap; width: 200px; }
+
+/* 참고자료 */
+.refs { columns: 2; column-gap: 64px; list-style: none; margin-top: 30px; font-size: 26px; line-height: 1.35; }
+.refs li { display: grid; grid-template-columns: 44px 1fr; break-inside: avoid; padding: 11px 0; border-bottom: 1px solid var(--hair); }
+.refs .tech { font-weight: 700; font-size: 28px; }
+.ai { margin-top: 34px; border-top: 4px solid var(--ink); padding-top: 18px; font-size: 30px; line-height: 1.45; font-weight: 500; }
+.ai b { font-weight: 900; }
+
+/* 발표자 대본 (N) */
+#notes { position: fixed; left: 0; right: 0; bottom: 0; height: 210px; display: none; grid-template-columns: 150px 1fr; gap: 24px; padding: 16px 24px; background: var(--ink); color: var(--paper); font-size: 19px; line-height: 1.5; }
+#notes.open { display: grid; }
+#notes .clk { font-family: var(--tech); font-weight: 700; font-size: 52px; line-height: 1; font-variant-numeric: tabular-nums; }
+#notes .tgt { font-family: var(--tech); font-weight: 600; font-size: 21px; margin-top: 8px; color: var(--hair); }
+#notes .txt { overflow-y: auto; scrollbar-color: var(--hair) var(--ink); }
+#notes .txt b { color: #A3C6E6; }
+
+.nt { display: none; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <marker id="mb" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1565A8"/></marker>
+  <marker id="mk" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#151617"/></marker>
+</defs></svg>
+
+<main id="stage">
+
+<!-- 도면 틀 -->
+<svg class="frame" viewBox="0 0 1600 900" aria-hidden="true">
+  <rect x="12" y="12" width="1576" height="876" fill="none" stroke="#151617" stroke-width="1.2"/>
+  <rect x="28" y="28" width="1544" height="844" fill="none" stroke="#151617" stroke-width="3"/>
+  <g stroke="#151617" stroke-width="1.2">
+    <path d="M209 12v16M406 12v16M603 12v16M800 12v16M997 12v16M1194 12v16M1391 12v16"/>
+    <path d="M209 872v16M406 872v16M603 872v16M800 872v16M997 872v16M1194 872v16M1391 872v16"/>
+    <path d="M12 231h16M12 450h16M12 669h16M1572 231h16M1572 450h16M1572 669h16"/>
+  </g>
+  <g fill="#50555B" font-size="13" font-weight="600" text-anchor="middle">
+    <text x="111" y="25">1</text><text x="308" y="25">2</text><text x="505" y="25">3</text><text x="702" y="25">4</text><text x="899" y="25">5</text><text x="1096" y="25">6</text><text x="1293" y="25">7</text><text x="1490" y="25">8</text>
+    <text x="111" y="885">1</text><text x="308" y="885">2</text><text x="505" y="885">3</text><text x="702" y="885">4</text><text x="899" y="885">5</text><text x="1096" y="885">6</text><text x="1293" y="885">7</text><text x="1490" y="885">8</text>
+    <text x="20" y="126">A</text><text x="20" y="345">B</text><text x="20" y="564">C</text><text x="20" y="783">D</text><text x="1580" y="126">A</text><text x="1580" y="345">B</text><text x="1580" y="564">C</text><text x="1580" y="783">D</text>
+  </g>
+</svg>
+
+<!-- 1. 표지 -->
+<section class="slide cover" data-sec="① 제목 및 요약" data-t="0:00">
+  <svg width="1472" height="756" viewBox="0 0 1472 756" style="position:absolute;left:0;top:0" aria-hidden="true">
+    <line x1="560" y1="66" x2="1472" y2="66" stroke="#1565A8" stroke-width="8"/>
+    <g stroke="#1565A8" fill="#F2F3EF">
+      <rect x="640" y="8" width="72" height="30" stroke-width="2"/><line x1="640" y1="38" x2="712" y2="8" stroke-width="1.5"/><line x1="676" y1="38" x2="676" y2="66" stroke-width="3"/>
+      <rect x="760" y="8" width="72" height="30" stroke-width="2"/><line x1="760" y1="38" x2="832" y2="8" stroke-width="1.5"/><line x1="796" y1="38" x2="796" y2="66" stroke-width="3"/>
+      <rect x="880" y="8" width="72" height="30" stroke-width="2"/><line x1="880" y1="38" x2="952" y2="8" stroke-width="1.5"/><line x1="916" y1="38" x2="916" y2="66" stroke-width="3"/>
+    </g>
+    <text x="1120" y="48" fill="#1565A8" font-size="30" font-weight="700">ORBIT 궤도 모선</text>
+    <line x1="1412" y1="570" x2="1412" y2="76" stroke="#1565A8" stroke-width="4" marker-end="url(#mb)"/>
+    <line x1="0" y1="570" x2="1460" y2="570" stroke="#C8321F" stroke-width="12"/>
+    <text x="0" y="548" fill="#C8321F" font-size="30" font-weight="700">수도권 모선 · 과부하</text>
+    <g stroke="#C8321F" stroke-width="3"><line x1="80" y1="570" x2="80" y2="608"/><line x1="170" y1="570" x2="170" y2="608"/><line x1="260" y1="570" x2="260" y2="608"/></g>
+    <g fill="#C8321F"><path d="M64 608h32l-16 26z"/><path d="M154 608h32l-16 26z"/><path d="M244 608h32l-16 26z"/></g>
+    <line x1="370" y1="570" x2="370" y2="608" stroke="#151617" stroke-width="3"/><path d="M354 608h32l-16 26z" fill="#151617"/>
+  </svg>
+  <h1>ORBIT <span class="b">2050</span></h1>
+  <p class="sub">AI 데이터센터를 우주로 보낸다</p>
+  <p class="who"><span class="tech">E26-AI01-17</span> · 인공지능전공 · <span class="tech">Feel the AGI</span></p>
+  <p class="nt">안녕하세요. 인공지능전공 E26-AI01-17 팀, ORBIT 2050입니다.</p>
+</section>
+
+<!-- 2. 개정 이력 -->
+<section class="slide hook" data-sec="① 제목 및 요약" data-steps="1" data-t="0:06">
+  <div>
+    <h2>당신이 상상한 2050년은, <span class="r">2030년이면 온다.</span></h2>
+    <svg width="650" height="170" viewBox="0 0 650 170" style="margin-top:44px;display:block" role="img" aria-label="2022년 11월 ChatGPT 출시에서 2025년 7월 국제수학올림피아드 금메달 수준까지 3년">
+      <line x1="10" y1="62" x2="640" y2="62" stroke="#151617" stroke-width="4"/>
+      <circle cx="16" cy="62" r="10" fill="#151617"/><circle cx="634" cy="62" r="10" fill="#151617"/>
+      <text x="0" y="34" fill="#151617" font-size="40" font-weight="700">2022.11</text>
+      <text x="650" y="34" fill="#151617" font-size="40" font-weight="700" text-anchor="end">2025.07</text>
+      <text x="0" y="104" fill="#151617" font-size="28" font-weight="600">ChatGPT 출시</text>
+      <text x="650" y="104" fill="#151617" font-size="28" font-weight="600" text-anchor="end">IMO 금메달 수준</text>
+      <text x="325" y="50" fill="#50555B" font-size="30" font-weight="700" text-anchor="middle">3년</text>
+      <text x="0" y="156" fill="#50555B" font-size="26" font-weight="600">2050년까지는 24년 남았다.</text>
+    </svg>
+    <p class="then" data-at="1">그럼 2050년에 진짜 막히는 건?<br><span class="r">전기다.</span></p>
+  </div>
+  <div class="rev">
+    <table class="rule-t">
+      <tr><th class="k">REV</th><th>흔히 상상하는 2050년</th><th>판정</th></tr>
+      <tr><td class="k">A</td><td><s>웨어러블 건강관리</s></td><td class="v">2030 가능</td></tr>
+      <tr><td class="k">B</td><td><s>AI 돌봄 로봇</s></td><td class="v">2030 가능</td></tr>
+      <tr><td class="k">C</td><td><s>AI 길 안내</s></td><td class="v">2030 가능</td></tr>
+      <tr><td class="k">D</td><td><s>업무 자동화 (B2B AX)</s></td><td class="v">2030 가능</td></tr>
+      <tr><td class="k">E</td><td><s>AI 개인 비서</s></td><td class="v">2030 가능</td></tr>
+      <tr class="cur" data-at="1"><td class="k">F</td><td>ORBIT 2050 · 전력 병목을 궤도에서 푼다</td><td class="v">현행</td></tr>
+    </table>
+    <p class="rev-n">A~E는 2026년 현재 이미 상용화됐거나 시범 운영 중인 기술이다. 나빠서가 아니라 2050년이라 하기엔 너무 가깝다.</p>
+  </div>
+  <p class="nt">웨어러블, 돌봄 로봇, 업무 자동화. 2050년 하면 흔히 떠올리는 주제지만, 지금 2026년에 이미 상용화됐거나 시범 운영 중입니다. ChatGPT가 나오고 3년 만에 AI가 수학올림피아드 금메달 수준까지 왔습니다. 그래서 저희는 이걸 전부 '2030 가능'으로 지웠습니다. 나빠서가 아니라 2050년이라 하기엔 너무 가까워서입니다. <b>[클릭]</b> 그럼 2050년에 진짜 막히는 건 뭘까. 저희 답은 전기입니다.</p>
+</section>
+
+<!-- 3. 작동 도식 -->
+<section class="slide" data-sec="① 제목 및 요약" data-steps="3" data-t="0:40">
+  <h2>ORBIT은 AI 학습만 우주로 올린다</h2>
+  <svg width="1472" height="656" viewBox="0 0 1472 656" style="margin-top:18px;display:block" role="img" aria-label="지상 전력망과 궤도 위성의 단선도. 학습 작업을 위성으로 올리고, 궤도의 햇빛으로 학습하고, 완성된 모델만 레이저로 내려받는다.">
+    <text x="0" y="28" fill="#1565A8" font-size="30" font-weight="700">궤도 · 고도 650 km · 새벽-황혼 태양동기궤도</text>
+    <line x1="0" y1="310" x2="1472" y2="310" stroke="#151617" stroke-width="1.5" stroke-dasharray="26 6 4 6"/>
+    <text x="0" y="350" fill="#151617" font-size="30" font-weight="700">지상</text>
+
+    <!-- 궤도 -->
+    <line x1="400" y1="150" x2="1472" y2="150" stroke="#1565A8" stroke-width="8"/>
+    <text x="1472" y="128" fill="#1565A8" font-size="34" font-weight="700" text-anchor="end">ORBIT 궤도 모선</text>
+    <g stroke="#1565A8" fill="#F2F3EF">
+      <rect x="430" y="70" width="84" height="38" stroke-width="2"/><line x1="430" y1="108" x2="514" y2="70" stroke-width="1.5"/><line x1="472" y1="108" x2="472" y2="150" stroke-width="3"/>
+      <rect x="544" y="70" width="84" height="38" stroke-width="2"/><line x1="544" y1="108" x2="628" y2="70" stroke-width="1.5"/><line x1="586" y1="108" x2="586" y2="150" stroke-width="3"/>
+      <rect x="658" y="70" width="84" height="38" stroke-width="2"/><line x1="658" y1="108" x2="742" y2="70" stroke-width="1.5"/><line x1="700" y1="108" x2="700" y2="150" stroke-width="3"/>
+    </g>
+    <text x="405" y="90" fill="#151617" font-size="30" font-weight="700" text-anchor="end">태양광 발전</text>
+    <text x="405" y="122" fill="#50555B" font-size="27" font-weight="500" text-anchor="end">지상 대비 최대 8배 · 거의 24시간</text>
+    <g stroke="#1565A8" fill="#F2F3EF">
+      <line x1="1216" y1="150" x2="1216" y2="190" stroke-width="3"/><rect x="1176" y="190" width="80" height="46" stroke-width="2"/>
+      <line x1="1306" y1="150" x2="1306" y2="190" stroke-width="3"/><rect x="1266" y="190" width="80" height="46" stroke-width="2"/>
+      <line x1="1396" y1="150" x2="1396" y2="190" stroke-width="3"/><rect x="1356" y="190" width="80" height="46" stroke-width="2"/>
+    </g>
+    <g fill="#1565A8" font-size="27" font-weight="700" text-anchor="middle"><text x="1216" y="222">GPU</text><text x="1306" y="222">GPU</text><text x="1396" y="222">GPU</text></g>
+    <text x="1176" y="280" fill="#1565A8" font-size="30" font-weight="700">AI 학습 위성 클러스터</text>
+
+    <!-- 지상 -->
+    <circle cx="44" cy="440" r="32" fill="#F2F3EF" stroke="#151617" stroke-width="3"/><path d="M22 440q11 -17 22 0t22 0" fill="none" stroke="#151617" stroke-width="2.4"/>
+    <text x="44" y="504" fill="#151617" font-size="27" font-weight="600" text-anchor="middle">발전소</text>
+    <line x1="76" y1="440" x2="368" y2="440" stroke="#151617" stroke-width="5"/>
+    <text x="90" y="404" fill="#151617" font-size="27" font-weight="700">송전선 <tspan fill="#50555B" font-weight="500">· 새로 짓는 데 4~8년</tspan></text>
+    <circle cx="392" cy="440" r="24" fill="none" stroke="#151617" stroke-width="3"/><circle cx="424" cy="440" r="24" fill="none" stroke="#151617" stroke-width="3"/>
+    <line x1="448" y1="440" x2="470" y2="440" stroke="#151617" stroke-width="5"/>
+    <line x1="470" y1="440" x2="980" y2="440" stroke="#C8321F" stroke-width="12"/>
+    <text x="480" y="416" fill="#C8321F" font-size="34" font-weight="700">수도권 모선 · 과부하</text>
+    <g stroke="#C8321F" stroke-width="3"><line x1="530" y1="440" x2="530" y2="500"/><line x1="630" y1="440" x2="630" y2="500"/><line x1="730" y1="440" x2="730" y2="500"/></g>
+    <g fill="#C8321F"><path d="M514 500h32l-16 26z"/><path d="M614 500h32l-16 26z"/><path d="M714 500h32l-16 26z"/></g>
+    <text x="630" y="566" fill="#C8321F" font-size="30" font-weight="700" text-anchor="middle">AI 데이터센터</text>
+    <line x1="880" y1="440" x2="880" y2="500" stroke="#151617" stroke-width="3"/><path d="M864 500h32l-16 26z" fill="#151617"/>
+    <text x="880" y="566" fill="#151617" font-size="30" font-weight="600" text-anchor="middle">주거·학교</text>
+    <line x1="980" y1="440" x2="1090" y2="440" stroke="#151617" stroke-width="5"/>
+    <path d="M1050 400q40 54 80 0" fill="#F2F3EF" stroke="#151617" stroke-width="3"/>
+    <line x1="1090" y1="426" x2="1090" y2="490" stroke="#151617" stroke-width="3"/><line x1="1064" y1="490" x2="1116" y2="490" stroke="#151617" stroke-width="3"/>
+    <text x="1090" y="530" fill="#151617" font-size="30" font-weight="600" text-anchor="middle">지상국</text>
+
+    <!-- 1 올린다 -->
+    <g data-at="1">
+      <line x1="1072" y1="402" x2="1072" y2="158" stroke="#1565A8" stroke-width="5" marker-end="url(#mb)"/>
+      <circle cx="1034" cy="226" r="20" fill="#F2F3EF" stroke="#151617" stroke-width="2"/>
+      <text x="1034" y="236" fill="#151617" font-size="28" font-weight="700" text-anchor="middle">1</text>
+      <text x="1000" y="224" fill="#151617" font-size="40" font-weight="700" text-anchor="end">올린다</text>
+      <text x="1000" y="260" fill="#50555B" font-size="28" font-weight="500" text-anchor="end">학습 작업을 위성으로</text>
+    </g>
+    <!-- 2 학습한다 -->
+    <g data-at="2">
+      <g stroke="#1565A8" stroke-width="2.4" marker-end="url(#mb)"><line x1="458" y1="40" x2="466" y2="64"/><line x1="572" y1="40" x2="580" y2="64"/><line x1="686" y1="40" x2="694" y2="64"/></g>
+      <circle cx="830" cy="72" r="20" fill="#F2F3EF" stroke="#151617" stroke-width="2"/>
+      <text x="830" y="82" fill="#151617" font-size="28" font-weight="700" text-anchor="middle">2</text>
+      <text x="862" y="72" fill="#151617" font-size="40" font-weight="700">학습한다</text>
+      <text x="862" y="108" fill="#50555B" font-size="28" font-weight="500">햇빛으로 AI를 학습</text>
+    </g>
+    <!-- 3 내려받는다 -->
+    <g data-at="3">
+      <line x1="1108" y1="158" x2="1108" y2="398" stroke="#1565A8" stroke-width="5" stroke-dasharray="16 7" marker-end="url(#mb)"/>
+      <circle cx="1150" cy="358" r="20" fill="#F2F3EF" stroke="#151617" stroke-width="2"/>
+      <text x="1150" y="368" fill="#151617" font-size="28" font-weight="700" text-anchor="middle">3</text>
+      <text x="1182" y="358" fill="#151617" font-size="40" font-weight="700">내려받는다</text>
+      <text x="1182" y="394" fill="#50555B" font-size="28" font-weight="500">완성된 모델만 레이저로</text>
+      <text x="1472" y="636" fill="#151617" font-size="34" font-weight="700" text-anchor="end" style="font-family:var(--kr);font-weight:800">지상의 전기는 사람과 실시간 AI에게 돌아간다.</text>
+    </g>
+  </svg>
+  <p class="nt">ORBIT은 AI 학습을 우주로 올립니다. <b>[클릭]</b> 학습 작업을 위성으로 올리고, <b>[클릭]</b> 고도 650킬로미터 궤도에서 거의 끊기지 않는 햇빛으로 학습하고, <b>[클릭]</b> 완성된 모델만 레이저로 내려받습니다. 데이터센터 전부가 아니라 전기를 제일 많이 먹는 학습만 올리는 겁니다.</p>
+</section>
+
+<!-- 4. 숫자 -->
+<section class="slide" data-sec="② 문제와 사용자" data-t="1:00" data-src="IEA, Energy and AI (2025.4)">
+  <h2>전기 수요는 6년 만에 2배가 넘는데, <span class="r">송전선은 4~8년 걸린다</span></h2>
+  <svg width="1472" height="560" viewBox="0 0 1472 560" style="margin-top:30px;display:block" role="img" aria-label="세계 데이터센터 전력 소비는 2024년 415테라와트시에서 2030년 전망 945테라와트시. 새 송전선 하나를 짓는 데 4년에서 8년.">
+    <text x="0" y="30" fill="#50555B" font-size="30" font-weight="600">세계 데이터센터 전력 소비 (TWh)</text>
+    <text x="0" y="104" fill="#151617" font-size="44" font-weight="700">2024</text>
+    <rect x="240" y="66" width="483" height="52" fill="#151617"/>
+    <text x="740" y="108" fill="#151617" font-size="60" font-weight="700">415</text>
+    <text x="0" y="194" fill="#151617" font-size="44" font-weight="700">2030 <tspan font-size="30" font-weight="600" fill="#50555B">전망</tspan></text>
+    <rect x="240" y="156" width="1100" height="52" fill="none" stroke="#C8321F" stroke-width="4" stroke-dasharray="18 9"/>
+    <text x="1358" y="198" fill="#C8321F" font-size="60" font-weight="700">945</text>
+
+    <line x1="0" y1="262" x2="1472" y2="262" stroke="#A9ADA8" stroke-width="1.5"/>
+
+    <text x="0" y="316" fill="#50555B" font-size="30" font-weight="600">2024년에 새 송전선을 착공하면</text>
+    <!-- 연도 눈금: 2024–2032, 1년 = 140px, 2024 = 240 -->
+    <line x1="240" y1="430" x2="800" y2="430" stroke="#151617" stroke-width="10"/>
+    <line x1="800" y1="430" x2="1360" y2="430" stroke="#151617" stroke-width="10" stroke-dasharray="26 12"/>
+    <g stroke="#151617" stroke-width="3"><line x1="240" y1="408" x2="240" y2="452"/><line x1="800" y1="408" x2="800" y2="452"/><line x1="1360" y1="408" x2="1360" y2="452"/></g>
+    <line x1="1080" y1="370" x2="1080" y2="480" stroke="#C8321F" stroke-width="4"/>
+    <text x="1080" y="358" fill="#C8321F" font-size="34" font-weight="700" text-anchor="middle">2030 · 수요 2배 이상</text>
+    <g fill="#151617" font-size="44" font-weight="700" text-anchor="middle"><text x="240" y="508">2024</text><text x="800" y="508">2028</text><text x="1360" y="508">2032</text></g>
+    <text x="800" y="548" fill="#50555B" font-size="30" font-weight="600" text-anchor="middle">빨라야 4년</text>
+    <text x="1360" y="548" fill="#50555B" font-size="30" font-weight="600" text-anchor="middle">늦으면 8년</text>
+  </svg>
+  <p class="nt">왜 전기인지 숫자로 보겠습니다. 국제에너지기구 전망으로 세계 데이터센터 전력 소비는 2024년 415테라와트시에서 2030년 945테라와트시로, 두 배가 넘게 늡니다. 그런데 송전선 하나 새로 짓는 데는 4년에서 8년이 걸립니다.</p>
+</section>
+
+<!-- 5. 한국 -->
+<section class="slide" data-sec="② 문제와 사용자" data-t="1:20" data-src="동아일보 (2025.7.30)">
+  <h2>수도권 데이터센터 전력 심사, <span class="r">19건 중 4건만 통과했다</span></h2>
+  <p style="font-size:40px;font-weight:700;margin-top:18px;letter-spacing:-.01em">신청 물량은 20 GW, 원전 20기 규모다.</p>
+  <svg width="1472" height="430" viewBox="0 0 1472 430" style="margin-top:56px;display:block" role="img" aria-label="과부하 걸린 수도권 모선에서 19개 지선 중 4개만 연결되고 15개는 연결되지 못했다.">
+    <text x="0" y="36" fill="#C8321F" font-size="36" font-weight="700">수도권 모선 · 과부하</text>
+    <line x1="0" y1="70" x2="1472" y2="70" stroke="#C8321F" stroke-width="14"/>
+    <g id="feeders"></g>
+    <line x1="24" y1="290" x2="292" y2="290" stroke="#151617" stroke-width="3"/>
+    <text x="158" y="350" fill="#151617" font-size="60" font-weight="700" text-anchor="middle">통과 4건</text>
+    <line x1="328" y1="290" x2="1448" y2="290" stroke="#A9ADA8" stroke-width="3"/>
+    <text x="888" y="350" fill="#50555B" font-size="60" font-weight="600" text-anchor="middle">나머지 15건</text>
+  </svg>
+  <p class="nt">한국은 더 급합니다. 수도권 데이터센터 전력 신청이 원전 20기 규모까지 몰렸는데, 정부 심사에 오른 19건 중 4건만 통과했습니다.</p>
+</section>
+
+<!-- 6. 사람 -->
+<section class="slide" data-sec="② 문제와 사용자" data-t="1:32" data-src="김포 사례: 파이낸셜뉴스 (2024.10.27) · 인물은 수용가 예시">
+  <h2>이 전력망 끝에 사람이 있다</h2>
+  <div class="bus-r" aria-hidden="true"></div>
+  <div class="loads">
+    <div class="load">
+      <svg width="40" height="74" viewBox="0 0 40 74" aria-hidden="true"><line x1="20" y1="0" x2="20" y2="50" stroke="#C8321F" stroke-width="3"/><path d="M4 48h32l-16 26z" fill="#C8321F"/></svg>
+      <p class="who"><span class="tech">수용가 A</span> · 김포 주민, 45세</p>
+      <q>"아이 학교 앞에 특고압선이 지나간대요."</q>
+      <p>데이터센터가 들어설 때마다 주민 갈등이 따라온다.</p>
+    </div>
+    <div class="load">
+      <svg width="40" height="74" viewBox="0 0 40 74" aria-hidden="true"><line x1="20" y1="0" x2="20" y2="50" stroke="#C8321F" stroke-width="3"/><path d="M4 48h32l-16 26z" fill="#C8321F"/></svg>
+      <p class="who"><span class="tech">수용가 B</span> · AI 스타트업 대표, 32세</p>
+      <q>"전기 배정이 안 나와서 GPU를 못 돌려요."</q>
+      <p>모델은 있는데 전력망 연결을 몇 년씩 기다린다.</p>
+    </div>
+    <div class="load">
+      <svg width="40" height="74" viewBox="0 0 40 74" aria-hidden="true"><line x1="20" y1="0" x2="20" y2="50" stroke="#C8321F" stroke-width="3"/><path d="M4 48h32l-16 26z" fill="#C8321F"/></svg>
+      <p class="who"><span class="tech">계통 C</span> · 전력망 운영자</p>
+      <q>"수요는 2배로 뛰는데 송전선은 8년 걸려요."</q>
+      <p>국토는 좁고, 전력 수요는 수도권에 몰린다.</p>
+    </div>
+  </div>
+  <p class="so">의료·교육·산업이 AI 위에서 돌아갈 2050년엔, <span class="r">전력이 막히면 사회가 멈춘다.</span></p>
+  <p class="nt">그래서 아이 학교 앞으로 특고압선이 지나간다는 김포 주민, 전기 배정을 못 받아 GPU를 못 돌리는 스타트업, 늘어나는 수요를 송전선으로 못 따라가는 전력망 운영자가 생깁니다. 의료, 교육, 산업이 다 AI 위에서 돌아갈 2050년엔 전력이 막히면 사회가 같이 멈춥니다.</p>
+</section>
+
+<!-- 7. 미래 장면 -->
+<section class="slide" data-sec="③ 미래 장면" data-steps="1" data-t="1:55" data-src="김포 특고압선 사례: 파이낸셜뉴스 (2024.10.27) · 2050년 장면은 팀의 미래 시나리오">
+  <div class="stack" style="height:88px">
+    <h2 class="swap-a"><span class="r">2026 김포,</span> 전부 전력망 하나에 매달려 있다</h2>
+    <h2 class="swap-b"><span class="b">2050 김포,</span> 송전탑 대신 궤도로</h2>
+  </div>
+  <svg width="1472" height="480" viewBox="0 0 1472 480" style="margin-top:24px;display:block;overflow:visible" role="img" aria-label="2026년에는 AI 학습과 실시간 AI, 주거와 학교가 모두 과부하된 수도권 모선에 연결돼 있다. 2050년에는 AI 학습이 궤도 모선으로 옮겨 가고 지상 모선에 여유가 생긴다.">
+    <line x1="0" y1="176" x2="1472" y2="176" stroke="#151617" stroke-width="1.5" stroke-dasharray="26 6 4 6"/>
+    <text class="swap-a" x="0" y="40" fill="#50555B" font-size="32" font-weight="600">궤도: 연산 없음</text>
+    <text class="swap-b" x="0" y="40" fill="#1565A8" font-size="32" font-weight="700">궤도: ORBIT 모선</text>
+    <line class="sc-orbit" x1="400" y1="70" x2="1320" y2="70" stroke="#1565A8" stroke-width="10"/>
+
+    <!-- 지상 계통 -->
+    <circle cx="44" cy="310" r="32" fill="#F2F3EF" stroke="#151617" stroke-width="3"/><path d="M22 310q11 -17 22 0t22 0" fill="none" stroke="#151617" stroke-width="2.4"/>
+    <line x1="76" y1="310" x2="300" y2="310" stroke="#151617" stroke-width="5"/>
+    <circle cx="324" cy="310" r="24" fill="none" stroke="#151617" stroke-width="3"/><circle cx="356" cy="310" r="24" fill="none" stroke="#151617" stroke-width="3"/>
+    <line x1="380" y1="310" x2="400" y2="310" stroke="#151617" stroke-width="5"/>
+    <line class="sc-bus" x1="400" y1="310" x2="1200" y2="310" stroke-width="12"/>
+    <text class="swap-a" x="410" y="284" fill="#C8321F" font-size="36" font-weight="700">수도권 모선 · 과부하</text>
+    <text class="swap-b" x="410" y="284" fill="#151617" font-size="36" font-weight="700">수도권 모선 · 여유</text>
+
+    <!-- 빈 자리 (학습이 떠난 뒤) -->
+    <g class="swap-b">
+      <g stroke="#A9ADA8" stroke-width="3" stroke-dasharray="9 6"><line x1="490" y1="310" x2="490" y2="390"/><line x1="610" y1="310" x2="610" y2="390"/></g>
+      <text x="550" y="440" fill="#50555B" font-size="30" font-weight="500" text-anchor="middle">빈 자리</text>
+    </g>
+
+    <!-- 실시간 AI, 주거·학교 -->
+    <line x1="780" y1="310" x2="780" y2="380" stroke="#151617" stroke-width="3"/><path d="M764 380h32l-16 26z" fill="#151617"/>
+    <text x="780" y="446" fill="#151617" font-size="30" font-weight="600" text-anchor="middle">실시간 AI</text>
+    <line x1="930" y1="310" x2="930" y2="380" stroke="#151617" stroke-width="3"/><path d="M914 380h32l-16 26z" fill="#151617"/>
+    <text x="930" y="446" fill="#151617" font-size="30" font-weight="600" text-anchor="middle">주거·학교</text>
+
+    <!-- 김포 데이터센터 -->
+    <line class="sc-gimpo" x1="1110" y1="310" x2="1110" y2="384" stroke-width="4"/>
+    <g class="swap-a">
+      <rect x="1074" y="384" width="72" height="42" fill="none" stroke="#C8321F" stroke-width="3"/>
+      <text x="1166" y="402" fill="#C8321F" font-size="30" font-weight="700">김포 신규 데이터센터</text>
+      <text x="1166" y="438" fill="#C8321F" font-size="28" font-weight="500">학교 100 m 앞 특고압선</text>
+    </g>
+    <g class="swap-b">
+      <g stroke="#151617" stroke-width="3.5"><line x1="1094" y1="334" x2="1126" y2="362"/><line x1="1126" y1="334" x2="1094" y2="362"/></g>
+      <text x="1166" y="402" fill="#151617" font-size="30" font-weight="700">특고압선 철거</text>
+      <text x="1166" y="438" fill="#151617" font-size="28" font-weight="500">예정 부지 → 공원</text>
+    </g>
+
+    <!-- 모델 내려받기 -->
+    <g class="swap-b">
+      <line x1="1040" y1="80" x2="1040" y2="298" stroke="#1565A8" stroke-width="4" stroke-dasharray="14 7" marker-end="url(#mb)"/>
+      <text x="1060" y="228" fill="#1565A8" font-size="30" font-weight="700">모델만 내려받음</text>
+    </g>
+
+    <!-- AI 학습: 지상 모선에서 궤도 모선으로 옮겨 간다 -->
+    <g class="sc-learn">
+      <g stroke="currentColor" stroke-width="3"><line x1="490" y1="310" x2="490" y2="380"/><line x1="610" y1="310" x2="610" y2="380"/></g>
+      <g fill="currentColor"><path d="M474 380h32l-16 26z"/><path d="M594 380h32l-16 26z"/></g>
+      <text class="swap-a" x="550" y="446" fill="currentColor" font-size="30" font-weight="700" text-anchor="middle">AI 학습</text>
+      <text class="swap-b" x="650" y="398" fill="currentColor" font-size="30" font-weight="700">AI 학습 (궤도로 이전)</text>
+    </g>
+  </svg>
+  <div class="stack" style="margin-top:20px;height:100px">
+    <p class="cap swap-a">AI가 늘수록 송전탑과 특고압선 갈등이 커진다.</p>
+    <p class="cap swap-b">무거운 학습은 궤도에서 끝난다. 동네 데이터센터에는 실시간 AI만 남고, 학교 앞 예정 부지는 공원이 된다.</p>
+  </div>
+  <p class="nt">그럼 2050년 김포는 어떻게 달라질까요. 지금은 궤도엔 아무것도 없고, AI 학습도 실시간 AI도 주거와 학교도 전부 과부하 걸린 수도권 전력망 하나에 매달려 있습니다. 그래서 초등학교 100미터 앞으로 특고압선이 지나가는 갈등이 생깁니다. <b>[클릭]</b> 2050년에는 무거운 학습이 궤도로 옮겨 갔고, 땅에는 완성된 모델만 내려옵니다. 동네 데이터센터엔 빠른 응답이 필요한 실시간 AI만 남습니다. 전력망엔 여유가 생기고, 데이터센터가 들어설 예정이던 학교 앞 부지는 공원이 됩니다.</p>
+</section>
+
+<!-- 8. 작업 배분 -->
+<section class="slide" data-sec="④ 기술 방식" data-steps="1" data-t="2:40">
+  <h2>AI는 하늘에서 배우고, 땅에서 답한다</h2>
+  <svg width="1472" height="410" viewBox="0 0 1472 410" style="margin-top:20px;display:block" role="img" aria-label="AI 작업 배분 소프트웨어가 전환 스위치처럼 학습과 배치 작업은 궤도로, 실시간 추론은 지상으로 보낸다.">
+    <text x="0" y="104" fill="#151617" font-size="42" font-weight="700">AI 작업 배분 · 핵심 SW</text>
+    <rect x="0" y="165" width="290" height="80" fill="none" stroke="#151617" stroke-width="3"/>
+    <text class="swap-a" x="145" y="218" fill="#1565A8" font-size="38" font-weight="700" text-anchor="middle">학습 · 몇 주씩</text>
+    <text class="swap-b" x="145" y="218" fill="#151617" font-size="38" font-weight="700" text-anchor="middle">추론 · 바로 답</text>
+    <text x="0" y="296" fill="#50555B" font-size="30" font-weight="600">지연·날씨·궤도 혼잡·전기요금으로</text>
+    <text x="0" y="332" fill="#50555B" font-size="30" font-weight="600">자동 결정</text>
+    <line x1="290" y1="205" x2="472" y2="205" stroke="#151617" stroke-width="5"/>
+    <circle cx="480" cy="205" r="9" fill="#F2F3EF" stroke="#151617" stroke-width="3"/>
+    <line class="sw-arm" x1="487" y1="199" x2="654" y2="79" stroke-width="7"/>
+    <circle cx="660" cy="75" r="9" fill="#F2F3EF" stroke="#1565A8" stroke-width="3"/>
+    <circle cx="660" cy="335" r="9" fill="#F2F3EF" stroke="#151617" stroke-width="3"/>
+    <line x1="669" y1="75" x2="860" y2="75" stroke="#1565A8" stroke-width="5"/>
+    <line x1="669" y1="335" x2="860" y2="335" stroke="#151617" stroke-width="5"/>
+    <rect x="860" y="30" width="612" height="90" fill="none" stroke="#1565A8" stroke-width="3"/>
+    <text x="1166" y="90" fill="#1565A8" font-size="44" font-weight="700" text-anchor="middle">궤도 · 학습·배치 작업</text>
+    <rect x="860" y="290" width="612" height="90" fill="none" stroke="#151617" stroke-width="3"/>
+    <text x="1166" y="350" fill="#151617" font-size="44" font-weight="700" text-anchor="middle">지상 · 실시간 추론</text>
+  </svg>
+  <ul class="ux">
+    <li><b>사용자</b><span>평소처럼 AI를 쓴다. 앱에 "궤도에서 처리됨 · 지상 전력 절약량"이 표시된다.</span></li>
+    <li><b>AI 기업</b><span>전력 배정을 기다리지 않고, 궤도 연산을 클라우드처럼 빌려 쓴다.</span></li>
+    <li><b>운영자</b><span>XR 관제실에서 위성 수천 기의 상태를 3D로 본다.</span></li>
+  </ul>
+  <p class="nt">한 줄로 하면, AI는 하늘에서 배우고 땅에서 답합니다. 저희가 만드는 핵심 소프트웨어는 AI 작업 배분입니다. 작업이 들어오면 지연, 날씨, 궤도 혼잡, 전기요금을 보고 자동으로 나눕니다. 몇 주씩 걸리는 학습은 궤도로, <b>[클릭]</b> 바로 답해야 하는 실시간 추론은 지상으로 보냅니다. 사용자는 평소처럼 AI를 쓰고, AI 기업은 전력 배정을 기다리지 않고 궤도 연산을 빌려 씁니다.</p>
+</section>
+
+<!-- 9. 구성품 + 일정 -->
+<section class="slide" data-sec="④ 기술 방식" data-t="3:10" data-src="Google Research (2025.11.4) · DCD (2025.11) · 뉴시스 (2026.4.17)">
+  <h2>공상만은 아니다. 이미 시작됐다.</h2>
+  <div class="build">
+    <table class="rule-t bom">
+      <tr><th class="k">No.</th><th>구성</th><th>역할</th></tr>
+      <tr><td class="k">1</td><td><b>궤도 태양광</b></td><td>거의 24시간 발전</td></tr>
+      <tr><td class="k">2</td><td><b>우주용 칩·방열</b></td><td>방사선에 견디는 칩, 대형 방열판</td></tr>
+      <tr><td class="k">3</td><td><b>위성 클러스터</b></td><td>레이저로 묶어 하나의 데이터센터처럼</td></tr>
+      <tr class="core"><td class="k">4</td><td><b>AI 작업 배분</b></td><td>학습은 궤도로, 실시간 추론은 지상으로</td></tr>
+      <tr><td class="k">5</td><td><b>궤도 관리 AI</b></td><td>충돌 회피, 수명이 다하면 재진입 폐기</td></tr>
+    </table>
+    <div class="tl">
+      <svg width="40" height="600" viewBox="0 0 40 600" aria-hidden="true">
+        <line x1="20" y1="20" x2="20" y2="222" stroke="#1565A8" stroke-width="7"/>
+        <line x1="20" y1="222" x2="20" y2="444" stroke="#1565A8" stroke-width="7" stroke-dasharray="20 10"/>
+        <circle cx="20" cy="20" r="11" fill="#1565A8"/><circle cx="20" cy="161" r="11" fill="#1565A8"/>
+        <circle cx="20" cy="302" r="11" fill="#F2F3EF" stroke="#1565A8" stroke-width="4"/><circle cx="20" cy="443" r="11" fill="#F2F3EF" stroke="#1565A8" stroke-width="4"/>
+      </svg>
+      <ol>
+        <li><div class="d">2025.11</div><div class="t">Starcloud-1, H100으로 궤도에서 AI 학습</div></li>
+        <li><div class="d">2026.4</div><div class="t">우주항공청 K-문샷 '우주 데이터센터'</div></li>
+        <li><div class="d">2027</div><div class="t">구글 Suncatcher 시제 위성 2기</div></li>
+        <li><div class="d">2030</div><div class="t">누리호로 핵심기술 실증 목표</div></li>
+      </ol>
+    </div>
+  </div>
+  <p class="nt">위성 쪽은 궤도 태양광, 방열판, 레이저로 묶은 위성 클러스터, 충돌을 피하는 궤도 관리 AI로 이뤄집니다. 공상만은 아닙니다. 작년 11월 Starcloud-1이 궤도에서 AI를 학습시켰고, 구글은 내년에 시제 위성 2기를 올립니다. 우주항공청도 2030년 누리호로 핵심 기술을 실증하는 게 목표입니다.</p>
+</section>
+
+<!-- 10. 검증 질문 -->
+<section class="slide" data-sec="⑤ 검증 질문" data-t="3:35" data-src="kg당 200달러: Google Research, Project Suncatcher (2025.11.4)">
+  <h2>아직 못 푼 문제는 HOLD로 남겼다</h2>
+  <div class="holds">
+    <div>
+      <h3>기술적 실현 가능성</h3>
+      <div class="hold"><span class="tag">HOLD 1</span><b>진공에서 열을 버릴 수 있을까?</b><p>MW급 우주 방열은 아직 실증된 적이 없다.</p></div>
+      <div class="hold"><span class="tag">HOLD 2</span><b>발사비가 정말 내려갈까?</b><p>kg당 200달러 아래로 떨어져야 지상 전기요금과 비슷해진다.</p></div>
+      <div class="hold"><span class="tag">HOLD 3</span><b>지상 해법보다 나을까?</b><p>원전·재생에너지·송전망 확충과 AI 효율화만으로 충분하지 않을까?</p></div>
+    </div>
+    <div>
+      <h3>사회적·윤리적 문제</h3>
+      <div class="hold"><span class="tag">HOLD 4</span><b>우주 쓰레기는 누가 책임지나?</b><p>위성 수천 기가 늘리는 충돌 위험과 밤하늘 관측 피해.</p></div>
+      <div class="hold"><span class="tag">HOLD 5</span><b>궤도 연산을 누가 독점하나?</b><p>소수 기업과 강대국이 궤도를 차지하면 한국의 AI 주권은?</p></div>
+      <p class="stance">ORBIT은 지상 해법의 대체가 아니라 <span class="b">보완</span>이다.</p>
+    </div>
+  </div>
+  <p class="nt">아직 못 푼 문제는 HOLD, 미결 사항으로 남겼습니다. 가장 큰 건 열입니다. 진공에선 공기로 식힐 수 없어서 열을 복사로만 버려야 하는데, 메가와트급 우주 방열은 아직 실증된 적이 없습니다. 발사비가 kg당 200달러 아래로 내려가야 지상 전기요금과 비슷해지고, 원전이나 송전망 확충보다 정말 나은지도 따져봐야 합니다. 그래서 저희는 ORBIT을 지상 해법의 대체가 아니라 보완으로 봅니다. 우주 쓰레기는 누가 책임지는지, 궤도를 몇몇 나라와 기업이 차지하면 한국의 AI 주권은 어떻게 되는지도 열어 두었습니다.</p>
+</section>
+
+<!-- 11. 팀 -->
+<section class="slide end" data-sec="⑥ 팀 및 역할" data-t="4:15">
+  <h2>Feel the <span class="b">AGI</span></h2>
+  <p class="sub">ORBIT 2050 · AI 데이터센터를 우주로</p>
+  <table class="rule-t team">
+    <tr><td>총괄</td><td>김성빈</td><td>AI 작업 배분 엔진</td></tr>
+    <tr><td>궤도 설계</td><td>김수영</td><td>궤도·위성 구성, 충돌 회피</td></tr>
+    <tr><td>경제성</td><td>홍명운</td><td>발사비·전력 비용 분석</td></tr>
+    <tr><td>시각화</td><td>박지형</td><td>XR 관제 화면, 미래 장면</td></tr>
+  </table>
+  <p class="nt">궤도 설계는 김수영, 경제성은 홍명운, 시각화는 박지형, 총괄은 저 김성빈이 맡았습니다. Feel the AGI, ORBIT 2050이었습니다. 감사합니다.</p>
+</section>
+
+<!-- 12. 참고자료 -->
+<section class="slide" data-sec="⑥ 참고자료 · AI 활용" data-t="질문">
+  <h2>참고자료</h2>
+  <ol class="refs">
+    <li><span class="tech">1</span>OpenAI, ChatGPT 출시 (2022.11.30)</li>
+    <li><span class="tech">2</span>Google DeepMind·OpenAI, IMO 2025 금메달 수준 발표 (2025.7)</li>
+    <li><span class="tech">3</span>METR, Measuring AI Ability to Complete Long Tasks (2025.3)</li>
+    <li><span class="tech">4</span>Epoch AI, Can AI Scaling Continue Through 2030? (2024.8)</li>
+    <li><span class="tech">5</span>IEA, Energy and AI (2025.4)</li>
+    <li><span class="tech">6</span>동아일보, 수도권 데이터센터 전력 신청 (2025.7.30)</li>
+    <li><span class="tech">7</span>파이낸셜뉴스, 김포 데이터센터 주민 반대 (2024.10.27)</li>
+    <li><span class="tech">8</span>Google Research, Project Suncatcher (2025.11.4)</li>
+    <li><span class="tech">9</span>DCD, Starcloud-1 궤도 H100 운용 (2025.11)</li>
+    <li><span class="tech">10</span>뉴시스, 우주항공청 우주 데이터센터 간담회 (2026.4.17)</li>
+  </ol>
+  <p class="ai"><b>AI 활용.</b> 자료 조사·구성·문구 초안·레이아웃 코드에 Claude를 활용했고 팀이 검토·수정했다. 그림은 모두 벡터 도식으로 직접 그렸다.</p>
+  <p class="nt">질문 시간에 띄워 둡니다. 예상 질문과 답은 poster/orbit2050_script.md에 있습니다.</p>
+</section>
+
+<p class="src" id="src"></p>
+
+<!-- 표제란 -->
+<nav id="tb" aria-label="슬라이드 이동">
+  <a class="nm" href="../" title="홈으로">ORBIT 2050</a>
+  <span class="sec" id="tb-sec"></span>
+  <span class="no" id="tb-no" aria-live="polite"></span>
+  <button id="prev" type="button" aria-label="이전"><svg width="16" height="22" viewBox="0 0 16 22" aria-hidden="true"><path d="M13 2L3 11l10 9" fill="none" stroke="currentColor" stroke-width="3"/></svg></button>
+  <button id="next" type="button" aria-label="다음"><svg width="16" height="22" viewBox="0 0 16 22" aria-hidden="true"><path d="M3 2l10 9L3 20" fill="none" stroke="currentColor" stroke-width="3"/></svg></button>
+</nav>
+</main>
+
+<aside id="notes" aria-label="발표 대본">
+  <div><div class="clk" id="clk">0:00</div><div class="tgt" id="tgt"></div></div>
+  <div class="txt" id="txt"></div>
+</aside>
+
+<script>
+const $ = id => document.getElementById(id);
+const stage = $('stage'), notes = $('notes');
+const slides = [...document.querySelectorAll('.slide')];
+const stepsOf = el => +el.dataset.steps || 0;
+let cur = 0, step = 0, t0 = null;
+
+// 19건 중 앞 4건만 모선에 연결된 지선
+$('feeders').innerHTML = Array.from({ length: 19 }, (_, n) => {
+  const x = 24 + n * 79.1;
+  return n < 4
+    ? `<line x1="${x}" y1="70" x2="${x}" y2="210" stroke="#151617" stroke-width="4"/><path d="M${x - 20} 210h40l-20 34z" fill="#151617"/>`
+    : `<line x1="${x}" y1="70" x2="${x}" y2="112" stroke="#C8321F" stroke-width="4"/><line x1="${x}" y1="146" x2="${x}" y2="210" stroke="#A9ADA8" stroke-width="3" stroke-dasharray="8 6"/><line x1="${x - 10}" y1="112" x2="${x + 12}" y2="140" stroke="#C8321F" stroke-width="4"/><path d="M${x - 20} 210h40l-20 34z" fill="none" stroke="#A9ADA8" stroke-width="3"/>`;
+}).join('');
+
+function render() {
+  slides.forEach((el, n) => { el.hidden = n !== cur; });
+  const el = slides[cur];
+  el.dataset.step = step;
+  el.querySelectorAll('[data-at]').forEach(e => e.classList.toggle('on', step >= +e.dataset.at));
+  $('tb-sec').textContent = el.dataset.sec;
+  $('tb-no').textContent = `SHEET ${String(cur + 1).padStart(2, '0')}/${slides.length}`;
+  $('src').textContent = el.dataset.src ? '출처 · ' + el.dataset.src : '';
+  $('tgt').textContent = '목표 ' + el.dataset.t;
+  $('txt').innerHTML = el.querySelector('.nt').innerHTML;
+  history.replaceState(null, '', '#' + (cur + 1) + (step ? '.' + step : ''));
+}
+function go(n, s = 0) {
+  cur = Math.max(0, Math.min(slides.length - 1, n));
+  step = Math.max(0, Math.min(stepsOf(slides[cur]), s));
+  render();
+}
+function next() {
+  if (t0 === null) t0 = Date.now();
+  if (step < stepsOf(slides[cur])) { step++; render(); }
+  else if (cur < slides.length - 1) go(cur + 1);
+}
+function prev() {
+  if (step > 0) { step--; render(); }
+  else if (cur > 0) go(cur - 1, stepsOf(slides[cur - 1]));
+}
+function fit() {
+  const h = innerHeight - (notes.classList.contains('open') ? 210 : 0);
+  const k = Math.min(innerWidth / 1600, h / 900);
+  stage.style.transform = `translate(${(innerWidth - 1600 * k) / 2}px, ${(h - 900 * k) / 2}px) scale(${k})`;
+}
+
+addEventListener('resize', fit);
+addEventListener('keydown', e => {
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  const k = e.key;
+  if (['ArrowRight', 'ArrowDown', 'PageDown', ' ', 'Enter'].includes(k)) { e.preventDefault(); next(); }
+  else if (['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'].includes(k)) { e.preventDefault(); prev(); }
+  else if (k === 'Home') go(0);
+  else if (k === 'End') go(slides.length - 1, 99);
+  else if (k === 'f' || k === 'F') document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+  else if (k === 'n' || k === 'N') { notes.classList.toggle('open'); fit(); }
+});
+stage.addEventListener('click', e => {
+  if (e.target.closest('a, button')) return;
+  e.clientX < innerWidth / 3 ? prev() : next();
+});
+$('next').addEventListener('click', e => { next(); e.currentTarget.blur(); });
+$('prev').addEventListener('click', e => { prev(); e.currentTarget.blur(); });
+setInterval(() => {
+  const s = t0 === null ? 0 : Math.floor((Date.now() - t0) / 1000);
+  $('clk').textContent = Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+}, 1000);
+
+const [a, b] = location.hash.slice(1).split('.').map(Number);
+go((a || 1) - 1, b || 0);
+fit();
+</script>
+</body>
+</html>

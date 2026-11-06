@@ -4,6 +4,13 @@
 
 > Feel the AGI
 
+## ORBIT 2050 발표
+
+AI 데이터센터를 우주로 보낸다. 2026 유레카 프로젝트 5분 발표 자료.
+
+- **[발표 슬라이드 열기](presentation/)**
+- [A0 포스터 PDF](poster/ORBIT2050_A0.pdf)
+
 ## 팀 포스터
 
 <div class="poster">
