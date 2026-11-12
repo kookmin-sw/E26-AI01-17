@@ -1,0 +1,108 @@
+{
+  "title": "ORBIT 2050 포스터의 시각 세계",
+  "question": "주사위가 '궤도 지상궤적도'를 골랐어요. 그대로 갈지, 다른 안을 고를지, 다시 굴릴지 정해 주세요.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "궤도 지상궤적도",
+      "kicker": "THE ROLL",
+      "lineage": "위성 비행역학 차트 · 지상궤적(ground track) 지도",
+      "thesis": "포스터 전체가 한 장의 비행역학 차트다. 세계지도 위에서 ORBIT의 새벽-황혼 궤도가 낮과 밤의 경계선을 따라 도는 모습을 그려서, '거의 24시간 햇빛'을 말이 아니라 그림으로 증명한다.",
+      "palette": ["#E9EDEC", "#111417", "#2B3541", "#F2A21B", "#C93A2B"],
+      "materials": ["좌표 격자와 눈금", "도표 선과 주석", "숫자는 고정폭 수치체"],
+      "viewport": "위쪽 절반을 세계지도 위의 궤적 그림이 차지한다. 'ORBIT 2050'은 지도 범례 칸처럼 모서리에 놓이고, 올린다·학습한다·내려받는다 3단계가 궤적 위 주석으로 붙는다.",
+      "risk": "차트 문법이라 딱딱하고 학술적으로 읽힐 수 있다. 3m 거리에서는 지도 선이 글자와 경쟁할 수 있다.",
+      "raised": [
+        {"from": "challenger-cloud-edge", "raise": "색은 의미가 있는 곳에만 쓴다. 햇빛 받는 궤도와 전력 과부하 수치만 색을 갖고, 본문은 무채색으로 둔다."},
+        {"from": "challenger-quarry", "raise": "섹션을 둥근 카드에 담지 않고, 지도 도엽처럼 전폭 띠와 굵은 괘선으로 나눈다."},
+        {"from": "challenger-op-art", "raise": "잉크를 검정과 색 하나로 묶는다. 회색 면 채우기를 쓰지 않는다."},
+        {"from": "challenger-bbs", "raise": "모든 요소를 지도 격자 한 칸을 단위로 하는 하나의 모듈 격자에 맞춘다."},
+        {"from": "challenger-detector", "raise": "확인된 사실은 실선, 전망과 예측은 점선으로 그린다. 검증 질문 섹션이 선의 언어로 이어진다."}
+      ]
+    },
+    {
+      "id": "model-pick",
+      "label": "전력 계통도",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "한전 단선결선도(single-line diagram)",
+      "thesis": "포스터를 전력 계통도로 그린다. 수도권 모선이 빨갛게 과부하되고, ORBIT가 하늘 위의 새 모선으로 레이저 링크 기호에 이어진다. 문제와 해법이 회로 한 장에 들어간다.",
+      "palette": ["#F4F4F1", "#121212", "#D2302A", "#1C8FB0"],
+      "materials": ["모선·변압기·차단기 기호", "부하율 수치", "굵기로 위계를 주는 선"],
+      "viewport": "왼쪽에 과부하된 수도권 계통도, 오른쪽 위에 궤도 모선. 제목은 도면 표제란에 들어간다.",
+      "risk": "전기 기호가 비전공자에게 낯설다. 공학 전시회에서 자주 보는 도면풍이라 익숙함이 약점이 될 수 있다."
+    },
+    {
+      "id": "challenger-linocut",
+      "label": "판화 대자보",
+      "verdict": "competitive",
+      "lineage": "1930~40년대 멕시코 Taller de Gráfica Popular 리놀륨 판화 포스터",
+      "thesis": "'송전탑 대신 궤도로'를 판에 새긴 요구 문구처럼 크게 박는다. 검정 잉크 하나에 마닐라지, 김포 주민의 목소리를 정면으로 세운다.",
+      "palette": ["#E6D3A8", "#141210", "#B3261E"],
+      "materials": ["손으로 판 듯한 굵은 대문자", "한 가지 검정 잉크", "싼 갱지"],
+      "viewport": "포스터 위 3분의 2를 요구 문구와 송전탑·위성 실루엣이 채운다.",
+      "case": "어그로와 관객 반응은 가장 강하다. 대신 진짜 판화 그림이 필요한데 HTML 벡터만으로는 흉내에 그칠 위험이 있어 명료성에서 진다.",
+      "risk": "다른 팀을 공격하는 톤으로 읽힐 수 있다. 그림 품질이 판화에 못 미치면 싸 보인다."
+    },
+    {
+      "id": "challenger-cloud-edge",
+      "label": "무지갯빛 구름 가장자리",
+      "verdict": "declined",
+      "lineage": "구름 회절 관측",
+      "palette": ["#F7F8F8", "#4A5560", "#7FD1B9", "#C77DBA"],
+      "materials": ["얇은 산세리프", "넓은 여백"],
+      "case": "조용하고 읽기 좋지만, 전력망·우주와 연결되는 관객의 기억이 없다.",
+      "kept": "색은 의미 있는 가장자리에만, 본문은 무채색."
+    },
+    {
+      "id": "challenger-quarry",
+      "label": "구름 채석장",
+      "verdict": "declined",
+      "lineage": "초현실 풍경",
+      "palette": ["#F2F4F7", "#7FA7D6", "#5D6670"],
+      "materials": ["스텐실 대문자", "블록 적층"],
+      "case": "초현실이 주제를 흐린다.",
+      "kept": "섹션은 상자 대신 깊은 간격의 띠로 나눈다."
+    },
+    {
+      "id": "challenger-op-art",
+      "label": "옵아트 직물",
+      "verdict": "declined",
+      "lineage": "1960년대 옵아트",
+      "palette": ["#FFFFFF", "#000000"],
+      "materials": ["흑백 파동"],
+      "case": "눈이 어지러워 3m에서 글을 못 읽는다.",
+      "kept": "잉크 두 개로 끝까지 버티는 절제."
+    },
+    {
+      "id": "challenger-bbs",
+      "label": "ANSI 게시판",
+      "verdict": "declined",
+      "lineage": "1990년대 PC통신·BBS",
+      "palette": ["#000000", "#00AAAA", "#AA00AA", "#FFFFFF"],
+      "materials": ["블록 문자", "80×25 격자"],
+      "case": "AI 전공자 코스프레로 읽히고, 대형 인쇄에서 가독성이 떨어진다.",
+      "kept": "격자 한 칸이 모든 배치의 단위."
+    },
+    {
+      "id": "challenger-detector",
+      "label": "입자검출기 이벤트 화면",
+      "verdict": "declined",
+      "lineage": "CERN 이벤트 디스플레이",
+      "palette": ["#07090D", "#4D6B8A", "#F2D43D", "#E23B2E"],
+      "materials": ["동심원 단면", "고정폭 수치"],
+      "case": "검은 배경에 형광 선은 AI가 만든 포스터가 가장 자주 가는 길과 겹친다.",
+      "kept": "확신은 선 굵기로: 사실은 실선, 전망은 점선."
+    }
+  ],
+  "reroll": {"registers": ["safer", "bolder"]},
+  "canon": true,
+  "canonCard": {
+    "label": "우주 기술 포스터의 표준",
+    "thesis": "남색 우주 배경, 위성 그림, 흰 산세리프, 정돈된 카드. 지금 v0.3을 끝까지 다듬은 모습.",
+    "palette": ["#0B1530", "#FFFFFF", "#56C4EA", "#F0B13F"],
+    "materials": ["깔끔한 카드 격자", "벡터 위성 일러스트"],
+    "viewport": "남색 헤더에 큰 제목과 위성, 아래로 ①~⑥ 카드.",
+    "risk": "다른 우주·AI 포스터와 구분되지 않는다. 지금 'AI 냄새'의 원인 그대로다."
+  },
+  "steer": true
+}
